@@ -1,0 +1,78 @@
+2022-12-02 09:01:32 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "SELECT \000d\000a    name, \000d\000a    COUNT(*) AS [*]'project_count'\000d\000aFROM \000d\000a    client\000d\000aJOIN \000d\000a    project ON project.client_id = client.id\000d\000aGROUP BY \000d\000a    project.client_id\000d\000aORDER BY \000d\000a    COUNT(*) DESC\000d\000aLIMIT 1;"; ожидалось "identifier"
+Syntax error in SQL statement "SELECT \000d\000a    name, \000d\000a    COUNT(*) AS [*]'project_count'\000d\000aFROM \000d\000a    client\000d\000aJOIN \000d\000a    project ON project.client_id = client.id\000d\000aGROUP BY \000d\000a    project.client_id\000d\000aORDER BY \000d\000a    COUNT(*) DESC\000d\000aLIMIT 1;"; expected "identifier"; SQL statement:
+SELECT 
+    name, 
+    COUNT(*) AS 'project_count'
+FROM 
+    client
+JOIN 
+    project ON project.client_id = client.id
+GROUP BY 
+    project.client_id
+ORDER BY 
+    COUNT(*) DESC
+LIMIT 1; [42001-214]
+2022-12-02 09:01:32 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "SELECT \000d\000a    id AS [*]'Project_ID',\000d\000a    TIMESTAMPDIFF(MONTH, start_date, finish_date) AS 'month_count'\000d\000aFROM \000d\000a    project\000d\000aWHERE \000d\000a    TIMESTAMPDIFF(MONTH, start_date, finish_date) = \000d\000a    (SELECT MAX(TIMESTAMPDIFF(MONTH, start_date, finish_date))\000d\000a    FROM\000d\000a    project)\000d\000a;"; ожидалось "identifier"
+Syntax error in SQL statement "SELECT \000d\000a    id AS [*]'Project_ID',\000d\000a    TIMESTAMPDIFF(MONTH, start_date, finish_date) AS 'month_count'\000d\000aFROM \000d\000a    project\000d\000aWHERE \000d\000a    TIMESTAMPDIFF(MONTH, start_date, finish_date) = \000d\000a    (SELECT MAX(TIMESTAMPDIFF(MONTH, start_date, finish_date))\000d\000a    FROM\000d\000a    project)\000d\000a;"; expected "identifier"; SQL statement:
+SELECT 
+    id AS 'Project_ID',
+    TIMESTAMPDIFF(MONTH, start_date, finish_date) AS 'month_count'
+FROM 
+    project
+WHERE 
+    TIMESTAMPDIFF(MONTH, start_date, finish_date) = 
+    (SELECT MAX(TIMESTAMPDIFF(MONTH, start_date, finish_date))
+    FROM
+    project)
+; [42001-214]
+2022-12-02 09:01:32 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "WORKER" not found (this database is empty); SQL statement:
+SELECT
+    name,
+    salary
+FROM 
+    worker
+WHERE 
+    salary = (SELECT MAX(salary)
+    FROM
+    worker)
+    ; [42104-214]
+2022-12-02 09:01:32 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "SELECT \000d\000a    'Eldest' AS [*]'type',\000d\000a     name,\000d\000a     birthday\000d\000aFROM \000d\000a     worker\000d\000a\0009 WHERE birthday = \000d\000a    (SELECT MIN(birthday) FROM worker)\000d\000a    \000d\000aUNION\000d\000a\000d\000aSELECT \000d\000a    'Youngest' AS 'type',\000d\000a     name,\000d\000a     birthday\000d\000aFROM \000d\000a    worker\000d\000a\0009WHERE birthday = \000d\000a    (SELECT MAX(birthday)\000d\000a    FROM\000d\000a    worker)\000d\000a    ;"; ожидалось "identifier"
+Syntax error in SQL statement "SELECT \000d\000a    'Eldest' AS [*]'type',\000d\000a     name,\000d\000a     birthday\000d\000aFROM \000d\000a     worker\000d\000a\0009 WHERE birthday = \000d\000a    (SELECT MIN(birthday) FROM worker)\000d\000a    \000d\000aUNION\000d\000a\000d\000aSELECT \000d\000a    'Youngest' AS 'type',\000d\000a     name,\000d\000a     birthday\000d\000aFROM \000d\000a    worker\000d\000a\0009WHERE birthday = \000d\000a    (SELECT MAX(birthday)\000d\000a    FROM\000d\000a    worker)\000d\000a    ;"; expected "identifier"; SQL statement:
+SELECT 
+    'Eldest' AS 'type',
+     name,
+     birthday
+FROM 
+     worker
+	 WHERE birthday = 
+    (SELECT MIN(birthday) FROM worker)
+    
+UNION
+
+SELECT 
+    'Youngest' AS 'type',
+     name,
+     birthday
+FROM 
+    worker
+	WHERE birthday = 
+    (SELECT MAX(birthday)
+    FROM
+    worker)
+    ; [42001-214]
+2022-12-02 09:01:32 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "SELECT \000d\000a    project_id, \000d\000a    SUM(salary * TIMESTAMPDIFF(MONTH, start_date, finish_date)) AS [*]'price'\000d\000aFROM \000d\000a    project_worker\000d\000a    INNER JOIN project ON project.id = project_worker.project_id\000d\000a    INNER JOIN worker ON worker.id = project_worker.worker_id\000d\000aGROUP BY project.id\000d\000aORDER BY price DESC;"; ожидалось "identifier"
+Syntax error in SQL statement "SELECT \000d\000a    project_id, \000d\000a    SUM(salary * TIMESTAMPDIFF(MONTH, start_date, finish_date)) AS [*]'price'\000d\000aFROM \000d\000a    project_worker\000d\000a    INNER JOIN project ON project.id = project_worker.project_id\000d\000a    INNER JOIN worker ON worker.id = project_worker.worker_id\000d\000aGROUP BY project.id\000d\000aORDER BY price DESC;"; expected "identifier"; SQL statement:
+SELECT 
+    project_id, 
+    SUM(salary * TIMESTAMPDIFF(MONTH, start_date, finish_date)) AS 'price'
+FROM 
+    project_worker
+    INNER JOIN project ON project.id = project_worker.project_id
+    INNER JOIN worker ON worker.id = project_worker.worker_id
+GROUP BY project.id
+ORDER BY price DESC; [42001-214]
